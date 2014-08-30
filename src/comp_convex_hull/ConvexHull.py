@@ -15,14 +15,16 @@ class ConvexHull(object):
     def __init__(self, points):
         '''
         Constructor
+        @param points: a set or a list of points, in form of complex numbers, in the plain.
         '''
-        self.__points = copy(points)
+        self.__points = copy(list(points))
         
     def get_points(self):
         return self.__points
     
     def set_points(self, points):
-        self.__points = copy(points)
+        
+        self.__points = copy(list(points))
         
     def find_min_y_index(self, points):
         y_list = [c.imag for c in points]
@@ -51,7 +53,7 @@ class ConvexHull(object):
     def graham_scan(self):
         ''' 
         Perform the Graham scan Algorithm with the point of set, that is given to this ConvexHull instance.
-        @return: A list containing the points on the convex hull.
+        @return: A set containing the points on the convex hull.
         '''
         points = self.sort_by_real(self.get_points())
         n = len(points)
@@ -71,8 +73,4 @@ class ConvexHull(object):
                 M -= 1
                 
             M += 1
-        return self.normalize(-origin, res)
-            
-                
-        
-        
+        return set(self.normalize(-origin, res))

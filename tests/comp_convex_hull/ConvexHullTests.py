@@ -65,61 +65,72 @@ class ConvexHullTests(unittest.TestCase):
     def test_graham_scan_nothing_to_do(self):
         points = [0j, 2 + 0j, 2 + 2j, 2j]
         hull = ConvexHull(points)
-        self.assertEqual(hull.graham_scan(), points)
+        self.assertEqual(hull.graham_scan(), set(points))
     
     def test_graham_scan_easy_sorted_normed(self):
         points = [0j, 2 + 0j, 1 + 0.5j, 2 + 2j, 2j]
         hull = ConvexHull(points)
-        self.assertEqual(hull.graham_scan(), [0j, 2 + 0j, 2 + 2j, 2j])
+        self.assertEqual(hull.graham_scan(), set([0j, 2 + 0j, 2 + 2j, 2j]))
         
     def test_graham_scan_easy_sorted_normed2(self):
         points = [0j, 2 + 0j, 1 + 0.5j, 1 + 0.8j, 2 + 2j, 2j]
         hull = ConvexHull(points)
-        self.assertEqual(hull.graham_scan(), [0j, 2 + 0j, 2 + 2j, 2j])
+        self.assertEqual(hull.graham_scan(), set([0j, 2 + 0j, 2 + 2j, 2j]))
         
     def test_graham_scan_easy_normed(self):
         points = [0j, 2 + 2j, 2 + 0j, 1 + 0.5j, 1 + 0.8j, 2j ]
         hull = ConvexHull(points)
-        self.assertEqual(hull.graham_scan(), [0j, 2 + 0j, 2 + 2j, 2j])
+        self.assertEqual(hull.graham_scan(), set([0j, 2 + 0j, 2 + 2j, 2j]))
         
     def test_graham_scan_easy_normed2(self):
         points = [ 2 + 2j, 2 + 0j, 1 + 0.5j, 1 + 0.8j, 2j, 0j ]
         hull = ConvexHull(points)
-        self.assertEqual(hull.graham_scan(), [0j, 2 + 0j, 2 + 2j, 2j])
+        self.assertEqual(hull.graham_scan(), set([0j, 2 + 0j, 2 + 2j, 2j]))
         
     def test_graham_scan_easy_normed3(self):
         points = [ 2 + 2j, -2 + 0j, 1 + 0.5j, 1 + 0.8j, 2j, 0j ]
         hull = ConvexHull(points)
-        self.assertEqual(hull.graham_scan(), [-2 + 0j, 0j, 1 + 0.5j, 2 + 2j, 2j])
+        self.assertEqual(hull.graham_scan(), set([-2 + 0j, 0j, 1 + 0.5j, 2 + 2j, 2j]))
         
     def test_graham_scan_easy(self):
         points = [ 2 + 2j, -2 + 0j, 1 + 0.5j, 1 + 0.8j, 2j]
         hull = ConvexHull(points)
-        self.assertEqual(hull.graham_scan(), [-2 + 0j, 1 + 0.5j, 2 + 2j, 2j])
+        self.assertEqual(hull.graham_scan(), set([-2 + 0j, 1 + 0.5j, 2 + 2j, 2j]))
         
     def test_graham_scan_one_point(self):
         hull = ConvexHull([1 + 1j])
-        self.assertEqual(hull.graham_scan(), [1 + 1j])
+        self.assertEqual(hull.graham_scan(), set([1 + 1j]))
            
     def test_graham_scan_two_points(self):
         hull = ConvexHull([1 + 1j, 2 + 0.5j])
-        self.assertEqual(hull.graham_scan(), [2 + 0.5j, 1 + 1j])
+        self.assertEqual(hull.graham_scan(), set([2 + 0.5j, 1 + 1j]))
     
     def test_graham_scan_two_lin_dependant_points_sorted(self):
         points = [0j, 1 + 1j, 2 + 2j, 2j]
         hull = ConvexHull(points)
-        self.assertEqual(hull.graham_scan(), points)
+        self.assertEqual(hull.graham_scan(), set(points))
         
     def test_graham_scan_two_lin_dependant_points(self):
         hull = ConvexHull([0j, 2 + 2j, 1 + 1j, 2j])
-        self.assertEqual(hull.graham_scan(), [0j, 1 + 1j, 2 + 2j, 2j])
+        self.assertEqual(hull.graham_scan(), set([0j, 1 + 1j, 2 + 2j, 2j]))
 
     def test_graham_scan_many_uninteresting_points(self):
-        solution = [0+-2j, 2 + 0j, 2j, -2 + 0j]
+        solution = [0 + -2j, 2 + 0j, 2j, -2 + 0j]
         l = self.point_generator(10000, 1) + solution
         hull = ConvexHull(l)
-        self.assertEqual(hull.graham_scan(), solution)
+        solutionset = set(solution)
+        self.assertEqual(hull.graham_scan(), solutionset)
         
+    def test_graham_scan_same_points1(self):
+        points = [1j, 1j, 1j, 2j]
+        hull = ConvexHull(points)
+        self.assertEqual(hull.graham_scan(), {1j, 2j})
+        
+    def test_graham_scan_same_points2(self):
+        points = [1j, 1j, 1j]
+        hull = ConvexHull(points)
+        self.assertEqual(hull.graham_scan(), {1j})
+
 
 if __name__ == "__main__":
     # import sys;sys.argv = ['', 'Test.testName']
