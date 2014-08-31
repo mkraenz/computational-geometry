@@ -1,7 +1,7 @@
 computational-geometry
 ======================
 
-implemening easy algorithms from computational geometry
+implementing algorithms from computational geometry
 
 
 Compatibility
