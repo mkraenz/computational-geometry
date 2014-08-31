@@ -17,8 +17,9 @@ class ConvexHullView(object):
         hull = ConvexHull(set(points))
         hullpoints = hull.graham_scan_as_list()
         hullpoints.append(hullpoints[0])
-        self.draw_points(hullpoints)
-        
+        self.draw_lines(hullpoints)
+        self.draw_points(points)
+        plt.show()
     def __to_coord_lists(self, points):
         ''' 
         Converts the (complex) points to a list with only x-values and a corresponding list with the y-values.
@@ -31,11 +32,13 @@ class ConvexHullView(object):
             y_list.append(p.imag)
         return (x_list, y_list)
     
-    def draw_points(self, points):
+    def draw_lines(self, points):
         (x, y) = self.__to_coord_lists(points)
-        plt.plot(x,y, 'or') # draw points
         plt.plot(x,y, '-') # draw lines between points
         plt.ylabel("y")
         plt.xlabel("x")
-        plt.show()
+        
+    def draw_points(self, points):
+        (x,y) = self.__to_coord_lists(points)
+        plt.plot(x,y, 'or') # draw points
         
