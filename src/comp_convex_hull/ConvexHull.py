@@ -50,7 +50,7 @@ class ConvexHull(object):
     def __get_real(self, complex):
         return complex.real
     
-    def graham_scan(self):
+    def graham_scan_as_list(self):
         ''' 
         Perform the Graham scan Algorithm with the point of set, that is given to this ConvexHull instance.
         @return: A set containing the points on the convex hull.
@@ -73,4 +73,7 @@ class ConvexHull(object):
                 M -= 1
                 
             M += 1
-        return set(self.normalize(-origin, res))
+        return self.normalize(-origin, res)
+
+    def graham_scan(self):
+        return set(self.graham_scan_as_list())

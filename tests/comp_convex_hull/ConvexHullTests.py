@@ -6,7 +6,8 @@ Created on 25.08.2014
 import unittest
 from copy import copy
 from comp_convex_hull.ConvexHull import ConvexHull as ConvexHull
-from random import uniform
+from comp_convex_hull.ConvexHullView import ConvexHullView
+from util.point_generator import point_generator
 
 
 class ConvexHullTests(unittest.TestCase):
@@ -26,10 +27,6 @@ class ConvexHullTests(unittest.TestCase):
         hull = ConvexHull(points)
         self.assertEqual(hull.get_points(), self.get_list_one_point())
             
-    def point_generator(self, number, radius):
-        ''' generates a list of number many randomized points in the plane with norm <= radius '''
-        return [complex(uniform(-radius, radius), uniform(-radius, radius)) for i in range(number)]
-
     def test_copy(self):
         points = self.get_list_one_point()
         self.assertIsNot(points, copy(points))
@@ -113,10 +110,10 @@ class ConvexHullTests(unittest.TestCase):
     def test_graham_scan_two_lin_dependant_points(self):
         hull = ConvexHull([0j, 2 + 2j, 1 + 1j, 2j])
         self.assertEqual(hull.graham_scan(), set([0j, 1 + 1j, 2 + 2j, 2j]))
-
+        
     def test_graham_scan_many_uninteresting_points(self):
         solution = [0 + -2j, 2 + 0j, 2j, -2 + 0j]
-        l = self.point_generator(10000, 1) + solution
+        l = point_generator(10000, 1) + solution
         hull = ConvexHull(l)
         solutionset = set(solution)
         self.assertEqual(hull.graham_scan(), solutionset)
@@ -130,7 +127,7 @@ class ConvexHullTests(unittest.TestCase):
         points = [1j, 1j, 1j]
         hull = ConvexHull(points)
         self.assertEqual(hull.graham_scan(), {1j})
-
+        
 
 if __name__ == "__main__":
     # import sys;sys.argv = ['', 'Test.testName']
