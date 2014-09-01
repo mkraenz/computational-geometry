@@ -5,8 +5,8 @@ Created on 25.08.2014
 '''
 import unittest
 from copy import copy
-from comp_convex_hull.ConvexHull import ConvexHull as ConvexHull
-from comp_convex_hull.ConvexHullView import ConvexHullView
+from convex_hull.ConvexHull import ConvexHull as ConvexHull
+from convex_hull.ConvexHullView import ConvexHullView
 from util.point_generator import point_generator_uniform
 
 

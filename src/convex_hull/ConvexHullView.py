@@ -5,7 +5,7 @@ Created on 31.08.2014
 '''
 
 import matplotlib.pyplot as plt
-from comp_convex_hull.ConvexHull import ConvexHull
+from convex_hull.ConvexHull import ConvexHull
 
 class ConvexHullView(object):
     '''
